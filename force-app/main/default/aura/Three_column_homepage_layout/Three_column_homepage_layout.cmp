@@ -1,0 +1,18 @@
+<aura:component implements="lightning:homeTemplate" description="Custom Three Column Layout">
+
+    <aura:attribute name="header" type="Aura.Component[]"/>
+
+    <aura:attribute name="left_col" type="Aura.Component[]"/>
+    <aura:attribute name="mid_col" type="Aura.Component[]"/>
+    <aura:attribute name="right_col" type="Aura.Component[]"/>
+
+    <aura:attribute name="footer" type="Aura.Component[]"/>
+
+    <div>
+        <lightning:layout>
+            <lightning:layoutItem size="12" class="">
+                {!v.header}
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>	
