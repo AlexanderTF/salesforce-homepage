@@ -10,8 +10,28 @@
 
     <div>
         <lightning:layout>
-            <lightning:layoutItem size="12" class="">
+            <lightning:layoutItem size="12" class="slds-m-vertical_small">
                 {!v.header}
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <lightning:layout>
+            <lightning:layoutItem size="{! $Browser.isDesktop ? '4' : '12'}" class="">
+                {!v.left_col}
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="{! $Browser.isDesktop ? '4' : '12'}" padding="horizontal-small">
+                {!v.mid_col}
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="{! $Browser.isDesktop ? '4' : '12'}" class="">
+                {!v.right_col}
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <lightning:layout>
+            <lightning:layoutItem size="12" class="slds-m-vertical_small">
+                {!v.footer}
             </lightning:layoutItem>
         </lightning:layout>
     </div>
