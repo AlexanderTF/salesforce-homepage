@@ -1,8 +1,8 @@
 public with sharing class OpportunityController {
     @AuraEnabled(cacheable=true)
-    public Map<String, Integer> getOpportunityStageCounts() {
-        Id currentUserId = UserInfo.getUserId();
-        List<Opportunity> allUsersOpportunities = [SELECT Id, StageName, closeDate FROM Opportunity WHERE OwnerId = :currentUserId];
+    public static Map<String, Integer> getOpportunityStageCounts() {
+        //Id currentUserId = UserInfo.getUserId();
+        List<Opportunity> allUsersOpportunities = [SELECT Id, StageName FROM Opportunity];
         
         Map<String, Integer> stageCounts = new Map<String,Integer>{
             'In Process' => 0,

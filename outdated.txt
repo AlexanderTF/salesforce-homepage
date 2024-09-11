@@ -2,17 +2,14 @@ import { LightningElement, wire } from 'lwc';
 import getOpportunityStageCounts from '@salesforce/apex/OpportunityController.getOpportunityStageCounts';
 
 export default class MyComponent extends LightningElement {
-    radius = 50;
-    svgSize = 100;
+    radius = 250;
+    svgSize = 500;
 
     stageCounts;
     totalOpportunities;
     error;
-
-    stageClosedWon;
-    stageClosedLost;
-    stagePending;
-
+    
+    color = ['red','blue','orange'];
     donutData = [];
 
     @wire(getOpportunityStageCounts)
@@ -40,20 +37,15 @@ export default class MyComponent extends LightningElement {
             const startCoord = this.getCoordFromDegrees(startAngle, this.radius, this.svgSize);
             const endCoord = this.getCoordFromDegrees(endAngle, this.radius, this.svgSize);
 
-            const innerStartCoord = this.getCoordFromDegrees(endAngle, this.radius - 10, this.svgSize);
-            const innerEndCoord = this.getCoordFromDegrees(startAngle, this.radius - 10, this.svgSize);
+            const innerStartCoord = this.getCoordFromDegrees(endAngle, this.radius - 5, this.svgSize);
+            const innerEndCoord = this.getCoordFromDegrees(startAngle, this.radius - 5, this.svgSize);
 
-            const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0;
+            const largeArcFlag = (this.endAngle - this.startAngle) > 180 ? 1 : 0;
 
-            if (stage === 'Closed Won') {
-                this.stageClosedWon = this.createPathData(startCoord, endCoord, largeArcFlag, innerStartCoord, innerEndCoord);
-            }
-            else if (stage === 'Closed Lost') {
-                this.stageClosedLost = this.createPathData(startCoord, endCoord, largeArcFlag, innerStartCoord, innerEndCoord);
-            }
-            else {
-                this.stagePending = this.createPathData(startCoord, endCoord, largeArcFlag, innerStartCoord, innerEndCoord);
-            }
+            this.donutData.push({
+                stage: stage,
+                pathData: this.createPathData(startCoord, endCoord, largeArcFlag, innerStartCoord, innerEndCoord)
+            })
 
             startAngle = endAngle;
         }   
@@ -63,7 +55,7 @@ export default class MyComponent extends LightningElement {
         return `M ${startCoord[0]} ${startCoord[1]} 
                 A ${this.radius} ${this.radius} 0 ${largeArcFlag} 0 ${endCoord[0]} ${endCoord[1]}
                 L ${innerStartCoord[0]} ${innerStartCoord[1]}
-                A ${this.radius - 10} ${this.radius - 10} 0 ${largeArcFlag} 1 ${innerEndCoord[0]} ${innerEndCoord[1]}`;
+                A ${this.radius - 5} ${this.radius - 5} 0 ${largeArcFlag} 1 ${innerEndCoord[0]} ${innerEndCoord[1]}`;
     }
 
     // Function to get coordinates from degrees
