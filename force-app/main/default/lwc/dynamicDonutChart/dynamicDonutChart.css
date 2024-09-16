@@ -1,0 +1,23 @@
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.item {
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+}
+
+.donut-chart {
+    z-index: 1;
+}
+
+.chart-title {
+    position: absolute;
+    width: 95%;
+    text-align: center;
+}

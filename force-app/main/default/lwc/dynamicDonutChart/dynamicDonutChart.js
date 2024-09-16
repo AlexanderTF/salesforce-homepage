@@ -1,9 +1,9 @@
 import { LightningElement, wire } from 'lwc';
-import getOpportunityStageCounts from '@salesforce/apex/OpportunityController.getOpportunityStageCounts';
+import getOpportunityStageAmounts from '@salesforce/apex/OpportunityController.getOpportunityStageAmounts';
 
 export default class MyComponent extends LightningElement {
-    radius = 50;
-    svgSize = 100;
+    radius = 74;
+    svgSize = 150;
 
     stageCounts;
     totalOpportunities;
@@ -13,15 +13,16 @@ export default class MyComponent extends LightningElement {
     stageClosedLost;
     stagePending;
 
-    donutData = [];
+    totalAmountFormat;
 
-    @wire(getOpportunityStageCounts)
+    @wire(getOpportunityStageAmounts)
     wiredStageCounts({ error, data }) {
         if (data) {
             this.stageCounts = data;
             this.totalOpportunities = Object.values(data).reduce((acc, value) => acc + value, 0);
             this.createDonutData();
-            //this.error = undefined;
+            this.formatNumber(this.totalOpportunities);
+            this.error = undefined;
         } else if (error) {
             this.error = error;
             this.stageCounts = undefined;
@@ -77,6 +78,17 @@ export default class MyComponent extends LightningElement {
 
     getPercentage(numOppInStage,numOfOpp) {
         return ((numOppInStage * 360) / numOfOpp);
+    }
+
+    // Utility function to format numbers into 'k', 'M', etc.
+    formatNumber(value) {
+        if (value >= 1_000_000) {
+            this.totalAmountFormat = `$${(value / 1_000_000).toFixed(1)}M`;
+        } else if (value >= 1_000) {
+            this.totalAmountFormat = `$${(value / 1_000).toFixed(1)}k`;
+        } else {
+            this.totalAmountFormat = `$${value.toString()}`;
+        }
     }
 }
 

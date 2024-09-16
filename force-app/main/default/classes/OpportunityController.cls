@@ -1,27 +1,28 @@
 public with sharing class OpportunityController {
     @AuraEnabled(cacheable=true)
-    public static Map<String, Integer> getOpportunityStageCounts() {
-        //Id currentUserId = UserInfo.getUserId();
-        List<Opportunity> allUsersOpportunities = [SELECT Id, StageName FROM Opportunity];
+    public static Map<String, Decimal> getOpportunityStageAmounts() {
+        Id currentUserId = UserInfo.getUserId();
+        List<Opportunity> allUsersOpportunities = [SELECT Id, StageName, Amount FROM Opportunity WHERE OwnerId = :currentUserId];
         
-        Map<String, Integer> stageCounts = new Map<String,Integer>{
-            'In Process' => 0,
-            'Closed Won' => 0,
-            'Closed Lost' => 0
+        Map<String, Decimal> stageAmounts = new Map<String,Decimal>{
+            'In Process' => 0.0,
+            'Closed Won' => 0.0,
+            'Closed Lost' => 0.0
         };
 
         for (Opportunity opp: allUsersOpportunities){
             String stage = opp.StageName;
+            Decimal amount = opp.Amount;
 
             if (stage == 'Closed Won'){
-                stageCounts.put('Closed Won',stageCounts.get('Closed Won')+1);
+                stageAmounts.put('Closed Won',stageAmounts.get('Closed Won')+amount);
             } else if (stage == 'Closed Lost'){
-                stageCounts.put('Closed Lost',stageCounts.get('Closed Lost')+1);
+                stageAmounts.put('Closed Lost',stageAmounts.get('Closed Lost')+amount);
             } else {
-                stageCounts.put('In Process',stageCounts.get('In Process')+1);
+                stageAmounts.put('In Process',stageAmounts.get('In Process')+amount);
             }
         }
 
-        return stageCounts;
+        return stageAmounts;
     }
 }
