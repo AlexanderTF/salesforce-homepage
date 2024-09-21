@@ -1,7 +1,10 @@
-.button_background {
-    color: #05628A
-}
-
 .close_button_design {
     color: white;
+}
+
+.full-width {
+    width: 100%; /* Make buttons full width within their column */
+    display: flex; /* Enable flexbox on buttons */
+    justify-content: center; /* Center text within buttons */
+    min-height: 100%;
 }

@@ -10,20 +10,25 @@
                 </header>
             </div>
             <div class="slds-card__body slds-card__body_inner">
-                <div class="slds-grid slds-gutters_x-small slds-grid_align-space">
-                    <div class="slds-col slds-align_absolute-center slds-size_1-of-3">
-                        <button title='Create Account' class="slds-button slds-button_neutral button_background" onclick={openModal}>
+                <div class="slds-grid slds-gutters_x-small slds-grid_align-space slds-grid_align-center">
+                    <div class="slds-col slds-size_1-of-4">
+                        <button title='Create Account' class="slds-button slds-button_outline-brand full-width" onclick={openModal}>
                             Create Account
                         </button>
                     </div>
-                    <div class="slds-col slds-align_absolute-center slds-size_1-of-3">
-                        <button title="Create Opportunity" class="slds-button slds-button_neutral button_background" onclick={openModal}>
+                    <div class="slds-col slds-size_1-of-4">
+                        <button title="Create Opportunity" class="slds-button slds-button_outline-brand full-width" onclick={openModal}>
                             Create Opportunity
                         </button>
                     </div>
-                    <div class="slds-col slds-align_absolute-center slds-size_1-of-3">
-                        <button title="Create Contact" class="slds-button slds-button_neutral button_background" onclick={openModal}>
+                    <div class="slds-col slds-size_1-of-4">
+                        <button title="Create Contact" class="slds-button slds-button_outline-brand full-width" onclick={openModal}>
                             Create Contact
+                        </button>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <button title="Create Lead" class="slds-button slds-button_outline-brand full-width" onclick={openModal}>
+                            Create Lead
                         </button>
                     </div>
                 </div>
@@ -67,6 +72,16 @@
                             onsuccess={handleSuccess}
                             onerror={handleError}
                             fields={contactFields}
+                        >
+                        </lightning-record-form>
+                    </template>
+                    <template if:true={isCreatingLead}>
+                        <lightning-record-form
+                            object-api-name="Lead"
+                            mode="edit"
+                            onsuccess={handleSuccess}
+                            onerror={handleError}
+                            fields={leadFields}
                         >
                         </lightning-record-form>
                     </template>
