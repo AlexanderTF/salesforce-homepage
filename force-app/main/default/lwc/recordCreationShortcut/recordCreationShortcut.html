@@ -1,0 +1,78 @@
+<template>
+    <article class="slds-card">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <span>Quick Record Creation</span>
+                        </h2>
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body slds-card__body_inner">
+                <div class="slds-grid slds-gutters_x-small slds-grid_align-space">
+                    <div class="slds-col slds-align_absolute-center slds-size_1-of-3">
+                        <button title='Create Account' class="slds-button slds-button_neutral button_background" onclick={openModal}>
+                            Create Account
+                        </button>
+                    </div>
+                    <div class="slds-col slds-align_absolute-center slds-size_1-of-3">
+                        <button title="Create Opportunity" class="slds-button slds-button_neutral button_background" onclick={openModal}>
+                            Create Opportunity
+                        </button>
+                    </div>
+                    <div class="slds-col slds-align_absolute-center slds-size_1-of-3">
+                        <button title="Create Contact" class="slds-button slds-button_neutral button_background" onclick={openModal}>
+                            Create Contact
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <template if:true={isModalOpen}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close close_button_design" onclick={closeModal}>
+                <lightning-icon icon-name="utility:close" size="large" alternative-text="Indicates close"></lightning-icon>
+                <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" tabindex="-1">Create Record</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <template if:true={isCreatingAccount}>
+                        <lightning-record-form
+                            object-api-name="Account"
+                            mode="edit"
+                            onsuccess={handleSuccess}
+                            onerror={handleError}
+                            fields={accountFields}
+                        >
+                        </lightning-record-form>
+                    </template>
+                    <template if:true={isCreatingOpportunity}>
+                        <lightning-record-form
+                            object-api-name="Opportunity"
+                            mode="edit"
+                            onsuccess={handleSuccess}
+                            onerror={handleError}
+                            fields={opportunityFields}
+                        >
+                        </lightning-record-form>
+                    </template>
+                    <template if:true={isCreatingContact}>
+                        <lightning-record-form
+                            object-api-name="Contact"
+                            mode="edit"
+                            onsuccess={handleSuccess}
+                            onerror={handleError}
+                            fields={contactFields}
+                        >
+                        </lightning-record-form>
+                    </template>
+                </div>
+                </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+</template>
