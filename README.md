@@ -13,7 +13,7 @@ The pipeline shows the percentage of 'In Progress', 'Closed-Won' and 'Closed-Los
 
 ### 1) Retrieving the Opportunities
 
-We use an Apex Controller ***OpportunityController.cls*** to query the logged user's opportunities:
+We use an Apex Controller [***OpportunityController.cls***](https://github.com/AlexanderTF/salesforce-homepage/blob/main/force-app/main/default/classes/OpportunityController.cls) to query the logged user's opportunities:
 ```apex
 List<Opportunity> allUsersOpportunities = [SELECT Id, StageName, Amount FROM Opportunity WHERE OwnerId = :currentUserId];
 ```
@@ -37,7 +37,7 @@ The controller returns a Map<String, Decimal> named **stageAmounts** that will b
 
 ### 2) Designing the SVG Donut Chart
 
-To use the data from our Apex Controller in our Javascript file ***dynamicDonutChart.js***, we use the @wire decorator:
+To use the data from our Apex Controller in our Javascript file [***dynamicDonutChart.js***](https://github.com/AlexanderTF/salesforce-homepage/blob/main/force-app/main/default/lwc/dynamicDonutChart/dynamicDonutChart.js), we use the @wire decorator:
 ```apex
     @wire(getOpportunityStageAmounts)
     wiredStageCounts({ error, data }) {
@@ -56,7 +56,7 @@ To use the data from our Apex Controller in our Javascript file ***dynamicDonutC
 We then designed the Donut Chart with the help of some trigonometry. I used the following article to help me understand how to create an SVG using the *\<path\>* tag:
 [Medium - How to create an interactive Donut Chart using SVG](https://medium.com/@theAngularGuy/how-to-create-an-interactive-donut-chart-using-svg-107cbf0b5b6)
 
-The ***createDonutData()*** method will return a string containing the format for the \<path\> tag and will be used in the ***dynamicDonuctChart.html*** file:
+The ***createDonutData()*** method will return a string containing the format for the \<path\> tag and will be used in the [***dynamicDonuctChart.html***](https://github.com/AlexanderTF/salesforce-homepage/blob/main/force-app/main/default/lwc/dynamicDonutChart/dynamicDonutChart.html) file:
 ```html
 <svg width="150" height="150">
   <path d={stagePending} fill="#0D9DDA"/>
